@@ -2,9 +2,11 @@ const router=require('express').Router();
 const pool=require('../db')
 const bcrypt=require('bcrypt')
 const jwtGenerator=require('../utilities/jwtGenerator.js')
+const validInfo=require('../middleware/validInfo.js')
 
-//register
-router.post('/register',async(req,res)=>{
+//register with middle ware that check is all info has been entered and if formatted correctly
+
+router.post('/register',validInfo,async(req,res)=>{
     try {
         //get request boyd values
         const{name,email,password}=req.body;
@@ -31,9 +33,9 @@ router.post('/register',async(req,res)=>{
     }
 })
 
-//login route
+//login route with middle ware that check is all info has been entered and if formatted correctly
 
-router.post('/login',async(req,res)=>{
+router.post('/login',validInfo,async(req,res)=>{
     //get request data
     const {name,email,password}=req.body;
     //check that user exists
@@ -49,7 +51,7 @@ router.post('/login',async(req,res)=>{
     }
     //generate jwt token
     token=jwtGenerator(user.rows[0].user_id);
-    res.json({token})
+    res.json({token});
 
 
 try {
