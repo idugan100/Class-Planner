@@ -3,6 +3,7 @@ const pool=require('../db')
 const bcrypt=require('bcrypt')
 const jwtGenerator=require('../utilities/jwtGenerator.js')
 const validInfo=require('../middleware/validInfo.js')
+const authorize=require('../middleware/authorization')
 
 //register with middle ware that check is all info has been entered and if formatted correctly
 
@@ -23,13 +24,13 @@ router.post('/register',validInfo,async(req,res)=>{
         const newUser= await pool.query('insert into users (user_name,user_email,user_password) values ($1,$2,$3) returning *',[name,email,bcryptPassword])
         //genertae jwt token and return it as a response
         const token=jwtGenerator(newUser.rows[0].user_id);
-        res.json({token})
+        return res.json({token})
 
         
         res.json(newUser.rows[0]);
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("server error")
+        return res.status(500).send("server error")
     }
 })
 
@@ -61,5 +62,15 @@ try {
     
 }
 })
+
+//verify route
+router.get("/verify", authorize,async (req, res) => {
+    try {
+      res.json(true);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error");
+    }
+  });
 
 module.exports=router;

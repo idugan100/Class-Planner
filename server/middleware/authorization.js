@@ -12,6 +12,8 @@ module.exports=async (req,res,next)=>{
         //check if the jwt token is real
         const payload=jwt.verify(jwtToken,process.env.jwtSecret);
         req.user=payload.user;
+        console.log(req.user.user)
+        next();
 
         
     } catch (error) {
