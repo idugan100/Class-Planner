@@ -16,9 +16,9 @@ function App() {
      <Navbar/>
      <Switch>
       <Route path='/dashboard'>{isAuth ?<Dashboard/>:<Redirect to='/signin'/>}</Route>
-      <Route path='/create'><Create/></Route>
-      <Route path='/signup'><Signup/></Route>
-      <Route path='/signin'><Login/></Route>
+      <Route path='/create'>{isAuth ?<Create/>:<Redirect to='/signin'/>}</Route>
+      <Route path='/signup'>{!isAuth ?<Signup/>:<Redirect to='/dashboard'/>}</Route>
+      <Route path='/signin'>{!isAuth ?<Login/>:<Redirect to='/dashboard'/>}</Route>
 
      </Switch>
      </BrowserRouter>
