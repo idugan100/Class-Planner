@@ -39,16 +39,19 @@ router.post('/register',validInfo,async(req,res)=>{
 
 router.post('/login',validInfo,async(req,res)=>{
     //get request data
+    console.log("login request")
     const {name,email,password}=req.body;
     //check that user exists
     const user=await pool.query('select * from users where user_email=$1',[email])
     if(user.rows.length==0){
+        console.log("email not found")
         return res.status(401).json("Invalid credentials")
     }
 
     //check if incoming password is the same as the one in our database
     const passwordComp=await bcrypt.compare(password,user.rows[0].user_password)
     if(!passwordComp){
+        console.log("email deosnt match")
         return res.status(401).json("Invalid credentials")
     }
     //generate jwt token

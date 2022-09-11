@@ -1,0 +1,29 @@
+.navbar {
+    display: flex;
+    background-color: lightblue;
+    align-items: center;
+    justify-content: end;
+   
+}
+.navbar a{
+    text-decoration: none;
+    margin:15px;
+    color:black;
+    background-color: white;
+    font-size: 30px;
+    border-radius: 5px;
+    padding:5px;
+    border:solid 5px darkred;
+    
+}
+.navbar h2{
+    margin-right:  auto;
+    color:darkred;
+    font-size:36px;
+    font-weight: 1000;
+}
+body{
+
+    margin: 0px;
+    padding: 0px;
+}

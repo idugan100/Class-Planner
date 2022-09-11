@@ -7,6 +7,7 @@ module.exports=async (req,res,next)=>{
         const jwtToken=req.header('token');
         //make sure there is a token
         if(!jwtToken){
+            console.log("no token present")
             return res.status(403).json('no token present')
         }
         //check if the jwt token is real

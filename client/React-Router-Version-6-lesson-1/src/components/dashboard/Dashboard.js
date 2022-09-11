@@ -1,6 +1,7 @@
 import React from 'react'
 import {useContext} from 'react'
 import {AuthContext} from '../../context/AuthContext'
+import { useFetch } from '../../hooks/useFetch'
 
 export default function Dashboard() {
     //get data from api
@@ -10,7 +11,9 @@ export default function Dashboard() {
     {class:"SWE 1",semester:"Spring",year:2022},
     {class:"SWE 2",semester:"Fall",year:2023},
     {class:"Operating Systems",semester:"Spring",year:2023},
+    
 ]
+const{data:info,error,isPending}=useFetch('http://localhost:5000/dashboard')
 const {isAuth,token,dispatch}=useContext(AuthContext);
 const handleClick=(e)=>{
     dispatch({type:'LOGOUT'})
@@ -19,6 +22,7 @@ const handleClick=(e)=>{
 }
   return (
     <div>
+        {info&& <h1>hello:{info}</h1>}
         <button onClick={handleClick}>Logout</button>
         <p>token:{token}</p>
         {isAuth && <p>Logged in</p>}
