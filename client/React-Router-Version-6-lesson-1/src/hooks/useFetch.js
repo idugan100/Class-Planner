@@ -1,8 +1,10 @@
-import { useState, useEffect,} from "react"
+import {useContext, useState, useEffect,} from "react"
+import { AuthContext } from "../context/AuthContext";
 
 
 
 export const useFetch = (url, method="GET") => {
+  const{token}=useContext(AuthContext)
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
@@ -11,7 +13,8 @@ export const useFetch = (url, method="GET") => {
     setOptions({
       method: "POST",
       headers:{
-        "Content-type":"application/json"
+        "Content-type":"application/json",
+        "token":token
       },
       body:JSON.stringify(postData)
     })

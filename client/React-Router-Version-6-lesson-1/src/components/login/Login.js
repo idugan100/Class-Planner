@@ -22,7 +22,7 @@ export default function Login() {
         if(data){
             //TODO store token somewhere
             console.log(data.token)
-            dispatch({type:'LOGIN'})
+            dispatch({type:'LOGIN',payload:data.token})
         }
     },[data])
   return (

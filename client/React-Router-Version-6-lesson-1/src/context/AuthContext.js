@@ -7,9 +7,9 @@ export const authReducer=(state,action)=>{
     console.log(action.type)
     switch(action.type){
         case 'LOGIN':
-            return{...state,isAuth:true}
+            return{...state,token:action.payload,isAuth:true}
         case 'LOGOUT':
-            return {...state,isAuth:false}
+            return {...state,token:null,isAuth:false}
         default:
             return state
     }

@@ -11,7 +11,7 @@ export default function Dashboard() {
     {class:"SWE 2",semester:"Fall",year:2023},
     {class:"Operating Systems",semester:"Spring",year:2023},
 ]
-const {isAuth,dispatch}=useContext(AuthContext);
+const {isAuth,token,dispatch}=useContext(AuthContext);
 const handleClick=(e)=>{
     dispatch({type:'LOGOUT'})
 
@@ -20,6 +20,7 @@ const handleClick=(e)=>{
   return (
     <div>
         <button onClick={handleClick}>Logout</button>
+        <p>token:{token}</p>
         {isAuth && <p>Logged in</p>}
         {!isAuth && <p>Logged out</p>}
         <h1>Dashboard</h1>
