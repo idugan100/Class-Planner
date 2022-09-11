@@ -1,6 +1,7 @@
 import React from 'react'
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {AuthContext} from '../../context/AuthContext';
+import {useFetch} from '../../hooks/useFetch'
 
 
 export default function Signup() {
@@ -8,14 +9,24 @@ export default function Signup() {
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
     const [userName,setUserName]=useState("")
+    const { postData, data, error } = useFetch('http://localhost:5000/auth/register', 'POST')
     const handleSubmit=(event)=>{
         event.preventDefault()
-        console.log({email,password,userName});
         setEmail("");
         setPassword("");
         setUserName("");
-        dispatch({type:'LOGIN'})
+        postData({name:userName,email,password});
+
     }
+    //will dispatch LOGIN if request is sucessful!
+    useEffect(()=>{
+        if(data){
+            //TODO store token somewhere
+            console.log(data.token)
+            dispatch({type:'LOGIN'})
+        }
+
+    },[data])
   return (
     <div className="login">
         <h2>Signup</h2>
@@ -34,8 +45,8 @@ export default function Signup() {
             </label>
             <button type="submit">Login</button>
         </form>
-        {isAuth && <p>Logged in</p>}
-        {!isAuth && <p>Logged out</p>}
+        {error && <p>Email is already in use. Plase use another.</p>}
+        
     </div>
   )
 }

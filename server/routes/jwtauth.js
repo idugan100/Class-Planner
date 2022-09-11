@@ -14,7 +14,8 @@ router.post('/register',validInfo,async(req,res)=>{
         //check if user exists
         const user=await pool.query('select * from users where user_email=$1',[email])
         if(user.rows.length!=0){
-            return res.status(401).send("user already exists");
+            console.log("user already exisit")
+            return res.status(401).json("user already exists");
         }
         //bcrypt users password so it is more secure in database and in transit
         const saltRound=10;

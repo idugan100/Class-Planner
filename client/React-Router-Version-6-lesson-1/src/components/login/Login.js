@@ -1,20 +1,30 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { AuthContext } from "../../context/AuthContext";
 
 import { useContext } from "react";
+import {useFetch} from '../../hooks/useFetch'
+
 
 
 export default function Login() {
     const {isAuth,dispatch}=useContext(AuthContext);
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
+    const { postData, data, error } = useFetch('http://localhost:5000/auth/login', 'POST')
     const handleSubmit=(event)=>{
         event.preventDefault()
-        console.log({email,password});
+        
         setEmail("");
         setPassword("");
-        dispatch({type:"LOGIN"});
+        postData({email,password});
     }
+    useEffect(()=>{
+        if(data){
+            //TODO store token somewhere
+            console.log(data.token)
+            dispatch({type:'LOGIN'})
+        }
+    },[data])
   return (
     <div className="login">
         <h2>Login</h2>
@@ -29,8 +39,7 @@ export default function Login() {
             </label>
             <button type="submit">Login</button>
         </form>
-        {isAuth && <p>Logged in</p>}
-        {!isAuth && <p>Logged out</p>}
+        {error && <p>Username or password is incorrect</p>}
     </div>
   )
 }

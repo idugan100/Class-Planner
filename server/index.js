@@ -1,6 +1,6 @@
 const express=require('express');
 const app=express();
-const PORT=3001;
+const PORT=5000;
 const cors=require('cors');
 const regRouter=require('./routes/jwtauth')
 const dashRouter=require('./routes/dashboard');
@@ -16,5 +16,5 @@ app.use('/dashboard',dashRouter)
 
 
 app.listen(PORT,()=>{
-    console.log(`listening on post ${PORT}`)
+    console.log(`listening on port ${PORT}`)
 })
