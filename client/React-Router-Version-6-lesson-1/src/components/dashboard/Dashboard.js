@@ -1,41 +1,61 @@
-import React from 'react'
-import {useContext} from 'react'
+import React, { useState } from 'react'
+import {useContext,useEffect} from 'react'
 import {AuthContext} from '../../context/AuthContext'
 import { useFetch } from '../../hooks/useFetch'
 import { useData } from '../../hooks/useData'
-
+import './Dashboard.css'
 export default function Dashboard() {
     //get data from api
-    const data=[{class:"Database",semester:"Fall",year:2022},
-    {class:"English 103",semester:"Fall",year:2022},
-    {class:"Micro Computers",semester:"Spring",year:2022},
-    {class:"SWE 1",semester:"Spring",year:2022},
-    {class:"SWE 2",semester:"Fall",year:2023},
-    {class:"Operating Systems",semester:"Spring",year:2023},
     
-]
-const{data:info,error,isPending}=useData('http://localhost:5000/dashboard')
-const {isAuth,token,dispatch}=useContext(AuthContext);
 
+const {isAuth,token,dispatch}=useContext(AuthContext);
+const [reload,setReload]=useState("");
+
+
+    //const{data:info,error,isPending}=useData('http://localhost:5000/dashboard');
+
+const {data:classes,isPending}=useData('http://localhost:5000/dashboard/classes')
+
+const [array,setArray]=useState([]);
+useEffect(()=>{
+    if(classes){
+        setArray(Object.values(classes))
+        
+    }
+},[classes])
+
+
+
+ 
 
   return (
-    <div>
-        {info&& <h1>hello:{info.user_name}</h1>}
+    <div >
+        
         
 
         
         <h1>Dashboard</h1>
-        {
-            data.map((data)=>{
-                return(
-                    <>
-                    <h3>{data.class}</h3>
-                    <p>{data.semester}, {data.year}</p>
-                    <hr />
-                    </>
-                )
-            })
+        <div className='card-wrapper'>
+        {classes &&
+            
+            Object.values(classes).map((item)=>(
+                <div key ={item.id}className='card'>
+                    <h3>{item.classname}</h3>
+                    <p>{item.semester}</p>
+                    <p>{item.year}</p>
+                    <button>Delete</button>
+
+                </div>
+            ))
+            
         }
+        </div>
+            
+                
+            
+
+            
+        
     </div>
   )
 }

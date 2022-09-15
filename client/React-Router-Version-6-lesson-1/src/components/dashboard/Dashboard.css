@@ -1,0 +1,19 @@
+.card{
+    max-width: 250px;
+    min-width: 150px;
+    border:10px solid darkred;
+    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin:20px;
+    padding:7px;
+    font-size: 20px;
+    text-align: center;
+}
+.card-wrapper{
+    display:grid;
+    grid-template-columns: repeat(5,1fr);
+    
+}
