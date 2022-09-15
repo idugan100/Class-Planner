@@ -2,20 +2,44 @@ const router=require('express').Router();
 const pool=require('../db');
 const authorization = require('../middleware/authorization');
 const authorize=require('../middleware/authorization');
-router.get('/',authorization,async(req,res)=>{
+router.get('/classes',authorization,async(req,res)=>{
     try {
-        console.log(req.user);
         
-        const user=await pool.query('select user_name from users where user_id=$1',[req.user])
-        console.log(user.rows);
-        const classes=await pool.query('select Classes.classname, Classes.semester, Classes.year from Classes JOIN Users ON Classes.user_id=CAST(Users.user_id as varchar) where Users.user_id=$1',[req.user])
-        console.log(classes.rows);
-        res.json({username:user.rows[0],classes:{...classes.rows}})
+        const classes=await pool.query('select Classes.id, Classes.classname, Classes.semester, Classes.year from Classes JOIN Users ON Classes.user_id=CAST(Users.user_id as varchar) where Users.user_id=$1',[req.user])
+        
+        res.json({...classes.rows})
     } catch (error) {
         console.log(error.message)
         res.status(500).json('sserver error')
     }
 })
+router.get('/username',authorization,async(req,res)=>{
+    try {
+        console.log(req.user);
+        
+        const user=await pool.query('select user_name from users where user_id=$1',[req.user])
+        console.log(user.rows);
+        res.json(user.rows[0]); 
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json('sserver error')
+    }
+})
+
+router.delete('/classes',authorization,async(req,res)=>{
+    try {
+        console.log(req.user);
+        const {id}=req.body;
+        
+        const user=await pool.query('delete from classes where id=$1',[id])
+        console.log(user.rows);
+        res.send("deleted")
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json('server error')
+    }
+})
+
 
 
 module.exports=router;
