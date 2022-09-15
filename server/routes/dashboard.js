@@ -39,6 +39,18 @@ router.delete('/classes',authorization,async(req,res)=>{
         res.status(500).json('server error')
     }
 })
+router.post('/classes',authorization,async(req,res)=>{
+    try {
+        const {className,semester,year}=req.body;
+        const userId=req.user
+        const newClass=pool.query('insert into Classes values ($1,$2,$3,$4)',[userId,className,semester,year])
+        res.send("added...")
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json('server error')
+        
+    }
+})
 
 
 
