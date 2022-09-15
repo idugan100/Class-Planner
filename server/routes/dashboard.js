@@ -2,6 +2,7 @@ const router=require('express').Router();
 const pool=require('../db');
 const authorization = require('../middleware/authorization');
 const authorize=require('../middleware/authorization');
+//get all classes 
 router.get('/classes',authorization,async(req,res)=>{
     try {
         
@@ -13,6 +14,7 @@ router.get('/classes',authorization,async(req,res)=>{
         res.status(500).json('sserver error')
     }
 })
+//get username
 router.get('/username',authorization,async(req,res)=>{
     try {
         console.log(req.user);
@@ -25,7 +27,7 @@ router.get('/username',authorization,async(req,res)=>{
         res.status(500).json('sserver error')
     }
 })
-
+//delete a class by id
 router.delete('/classes',authorization,async(req,res)=>{
     try {
         console.log(req.user);
@@ -39,6 +41,7 @@ router.delete('/classes',authorization,async(req,res)=>{
         res.status(500).json('server error')
     }
 })
+//add a class
 router.post('/classes',authorization,async(req,res)=>{
     try {
         const {className,semester,year}=req.body;
@@ -55,5 +58,4 @@ router.post('/classes',authorization,async(req,res)=>{
 
 
 module.exports=router;
-//sql query for getting classes
-//select Classes.classname, Classes.semester, Classes.year from Classes JOIN Users ON Classes.user_id=CAST(Users.user_id as varchar) where Users.user_id='04edadd5-3672-459e-9827-224415177ef2';
+

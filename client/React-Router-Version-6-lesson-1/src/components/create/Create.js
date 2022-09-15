@@ -1,13 +1,18 @@
 import React, { useState,useContext } from 'react'
+
 import {AuthContext} from '../../context/AuthContext'
+import { useFetch } from '../../hooks/useFetch';
+import './Create.css'
 
 export default function Create() {
     const [className,setClassName]=useState("");
     const [semester,setSemester]=useState("");
     const [year,setYear]=useState("");
+    const {data,isPending,error,postData}=useFetch('http://localhost:5000/dashboard/classes',"POST")
     const handleSubmit=(e)=>{
         e.preventDefault();
         console.log({className,semester,year})
+        postData({className,semester,year})
         setClassName("");
         setSemester("");
         setYear("");
@@ -15,10 +20,10 @@ export default function Create() {
     const {isAuth,dispatch}=useContext(AuthContext);
   
   return (
-    <div>
+    <div className='create'>
          
         
-        <h1>Add A Class</h1>
+        <div className='heading-wrapper'><h1>Add A Class</h1></div>
         <form onSubmit={handleSubmit}>
             <label >
                 <span>Class Name</span>

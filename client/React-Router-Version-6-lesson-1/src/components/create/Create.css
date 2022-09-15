@@ -1,0 +1,32 @@
+
+.create h1{
+    display: flex;
+}
+
+.create label{
+    display: block;
+    margin:15px;
+    font-size: 25px;
+    padding: 5px;
+    
+}
+.create div{
+    display: flex;
+    justify-content: center;
+}
+.create span{
+    margin-right: 10px;
+}
+.create form{
+    background-color: lightblue;
+    max-width: 900px;
+    margin:auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.create button{
+    font-size: 20px;
+    margin:20px;
+    
+}
