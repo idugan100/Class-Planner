@@ -13,14 +13,11 @@ export default function Create() {
         setYear("");
     }
     const {isAuth,dispatch}=useContext(AuthContext);
-    const handleClick=(e)=>{
-    dispatch({type:'LOGOUT'})
-    }
+  
   return (
     <div>
-         <button onClick={handleClick}>Logout</button>
-        {isAuth && <p>Logged in</p>}
-        {!isAuth && <p>Logged out</p>}
+         
+        
         <h1>Add A Class</h1>
         <form onSubmit={handleSubmit}>
             <label >

@@ -27,3 +27,15 @@ body{
     margin: 0px;
     padding: 0px;
 }
+
+.navbar button{
+
+    text-decoration: none;
+    margin:15px;
+    color:black;
+    background-color: white;
+    font-size: 30px;
+    border-radius: 5px;
+    padding:5px;
+    border:solid 5px darkred;
+}

@@ -5,7 +5,10 @@ import './Navbar.css'
 
 
 export default function Navbar() {
-  const {isAuth}=useContext(AuthContext);
+  const {isAuth,dispatch}=useContext(AuthContext);
+  const handleClick=(e)=>{
+    dispatch({type:'LOGOUT'});
+  }
   return (
     <nav className='navbar'>
       <h2>College Planner</h2>
@@ -13,6 +16,7 @@ export default function Navbar() {
       {isAuth &&<Link to='/create'>Create</Link>}
       {!isAuth && <Link to='/signup'>Signup</Link>}
       {!isAuth && <Link to='/signin'>Signin</Link>}
+      {isAuth && <button onClick={handleClick}>Logout</button>}
      </nav>
   )
 }

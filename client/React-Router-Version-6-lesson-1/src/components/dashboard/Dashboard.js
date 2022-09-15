@@ -2,6 +2,7 @@ import React from 'react'
 import {useContext} from 'react'
 import {AuthContext} from '../../context/AuthContext'
 import { useFetch } from '../../hooks/useFetch'
+import { useData } from '../../hooks/useData'
 
 export default function Dashboard() {
     //get data from api
@@ -13,20 +14,16 @@ export default function Dashboard() {
     {class:"Operating Systems",semester:"Spring",year:2023},
     
 ]
-const{data:info,error,isPending}=useFetch('http://localhost:5000/dashboard')
+const{data:info,error,isPending}=useData('http://localhost:5000/dashboard')
 const {isAuth,token,dispatch}=useContext(AuthContext);
-const handleClick=(e)=>{
-    dispatch({type:'LOGOUT'})
 
 
-}
   return (
     <div>
-        {info&& <h1>hello:{info}</h1>}
-        <button onClick={handleClick}>Logout</button>
-        <p>token:{token}</p>
-        {isAuth && <p>Logged in</p>}
-        {!isAuth && <p>Logged out</p>}
+        {info&& <h1>hello:{info.user_name}</h1>}
+        
+
+        
         <h1>Dashboard</h1>
         {
             data.map((data)=>{
