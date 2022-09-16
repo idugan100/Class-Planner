@@ -9,12 +9,14 @@ export const useData = (url) => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
   const [options,setOptions]=useState(null);
+  const [reload,setReload]=useState("");
   
 
   useEffect(() => {
     const controller = new AbortController()
 
     const fetchData = async () => {
+      setReload("");
       setIsPending(true)
       
       try {
@@ -46,7 +48,7 @@ export const useData = (url) => {
       controller.abort()
     }
 
-  }, [url,token])
+  }, [url,token,reload])
 
-  return { data, isPending, error}
+  return { data, isPending, error,setReload}
 }

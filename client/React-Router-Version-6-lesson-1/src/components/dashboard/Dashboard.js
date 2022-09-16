@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+
 import {useContext,useEffect} from 'react'
 import {AuthContext} from '../../context/AuthContext'
-import { useFetch } from '../../hooks/useFetch'
+
 import { useData } from '../../hooks/useData'
 import './Dashboard.css'
 export default function Dashboard() {
@@ -9,20 +10,40 @@ export default function Dashboard() {
     
 
 const {isAuth,token,dispatch}=useContext(AuthContext);
-const [reload,setReload]=useState("");
 
 
-    //const{data:info,error,isPending}=useData('http://localhost:5000/dashboard');
 
-const {data:classes,isPending}=useData('http://localhost:5000/dashboard/classes')
+    
+//const{data:info,error,isPending}=useData('http://localhost:5000/dashboard')
+    const{data:classes,setReload}=useData('http://localhost:5000/dashboard/classes')
+
 
 const [array,setArray]=useState([]);
-useEffect(()=>{
-    if(classes){
-        setArray(Object.values(classes))
+
+
+
+const handleClick=async(id)=>{
+    
+    const options={
+        method:"DELETE",
+        headers:{
+        "Content-type":"application/json",
+        "token":token
+        },
+        body:JSON.stringify({id})
+    }
+    const res= await fetch('http://localhost:5000/dashboard/classes',{
+        headers:{"Content-type":"application/json","token":token},method:"DELETE",
+        body:JSON.stringify({id})
+    })
+    if(res.ok){
+        //update
+        setReload("reload")
+        
         
     }
-},[classes])
+
+}
 
 
 
@@ -43,12 +64,13 @@ useEffect(()=>{
                     <h3>{item.classname}</h3>
                     <p>{item.semester}</p>
                     <p>{item.year}</p>
-                    <button>Delete</button>
+                    <button onClick={()=>{handleClick(item.id)}}>Delete</button>
 
                 </div>
             ))
             
         }
+        
         </div>
             
                 
