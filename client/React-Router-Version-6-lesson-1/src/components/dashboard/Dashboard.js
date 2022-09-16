@@ -37,7 +37,7 @@ const handleClick=async(id)=>{
         body:JSON.stringify({id})
     })
     if(res.ok){
-        //update
+        //updates by refetching the data because reload is a useEffect dependency of useData
         setReload("reload")
         
         
