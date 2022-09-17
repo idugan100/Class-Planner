@@ -6,7 +6,7 @@ const authorize=require('../middleware/authorization');
 router.get('/classes',authorization,async(req,res)=>{
     try {
         
-        const classes=await pool.query('select Classes.id, Classes.classname, Classes.semester, Classes.year from Classes JOIN Users ON Classes.user_id=CAST(Users.user_id as varchar) where Users.user_id=$1',[req.user])
+        const classes=await pool.query("select Classes.id, Classes.classname, Classes.semester, Classes.year from Classes JOIN Users ON Classes.user_id=CAST(Users.user_id as varchar) where Users.user_id=$1 order by year, case when semester='Winter' then 1 when semester='Spring' then 2 when semester='Summer' then 3 when semester='Fall' then 4 end;",[req.user])
         
         res.json({...classes.rows})
     } catch (error) {
